@@ -30,11 +30,6 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   timeout: 5 * 60 * 1000,
-  expect: {
-    toMatchSnapshot: {
-      maxDiffPixelRatio: 0.1,
-    },
-  },
   projects: [
     {
       name: 'chromium',
