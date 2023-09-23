@@ -44,6 +44,7 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test
     - name: Cache
+      if: always()
       uses: actions/cache@v3
       with:
         path: "tests/visual_regression/*.png"
