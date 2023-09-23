@@ -34,7 +34,6 @@ jobs:
       with:
         username: ${{secrets.DOCKERHUB_USER}}
         password: ${{secrets.DOCKERHUB_PASSWORD}}
-    steps:
     -
       name: Docker compose
       uses: isbang/compose-action@v1.5.1
