@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Post form submits correct data 1`] = `
+{
+  "author": "reactAuthor",
+  "content": "content",
+  "title": "title",
+}
+`;
+
+exports[`Post form submits correct data 2`] = `"/post/1"`;
