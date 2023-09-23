@@ -40,11 +40,10 @@ jobs:
       with:
           compose-file: ".github/workflows/docker-compose.yaml"
           down-flags: "--volumes"
-    - name: Run FE
-      run: npm run dev
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
+      run: npm run dev
       run: npx playwright test
     - uses: actions/upload-artifact@v3
       if: always()
