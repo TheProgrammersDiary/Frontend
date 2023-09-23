@@ -20,9 +20,6 @@ jobs:
   test_e2e:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      contents: read
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
@@ -37,9 +34,13 @@ jobs:
       with:
         username: ${{secrets.DOCKERHUB_USER}}
         password: ${{secrets.DOCKERHUB_PASSWORD}}
+    steps:
     -
       name: Docker compose
-      run: .github/workflows/docker-compose.yaml up -d
+      uses: isbang/compose-action@v1.5.1
+      with:
+          compose-file: ".github/workflows/docker-compose.yaml"
+          down-flags: "--volumes"
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
