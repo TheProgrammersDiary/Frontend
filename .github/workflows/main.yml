@@ -44,7 +44,7 @@ jobs:
     - name: Cache before
       uses: actions/cache@v3
       with:
-        path: "tests/visual_regression/*.png"
+        path: "tests/visual_regression/page.test.tsx-snapshots/*.png"
         key: ${{runner.os}}-visual_regression-page_test_tsx_snapshots-${{hashFiles('tests/visual_regression/page.test.tsx-snapshots/*.png')}}
         restore-keys: ${{runner.os}}-visual_regression-page_test_tsx_snapshots
     - name: Run Playwright tests
