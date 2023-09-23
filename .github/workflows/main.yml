@@ -41,9 +41,15 @@ jobs:
           down-flags: "--volumes"
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Cache before
+      uses: actions/cache@v3
+      with:
+        path: "tests/visual_regression/*.png"
+        key: ${{runner.os}}-visual_regression-page_test_tsx_snapshots-${{hashFiles('tests/visual_regression/page.test.tsx-snapshots/*.png')}}
+        restore-keys: ${{runner.os}}-visual_regression-page_test_tsx_snapshots
     - name: Run Playwright tests
       run: npx playwright test
-    - name: Cache
+    - name: Cache after
       if: always()
       uses: actions/cache@v3
       with:
