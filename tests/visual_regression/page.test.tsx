@@ -10,3 +10,7 @@ test.describe("pages were not modified", () => {
     await expect(page).toHaveScreenshot({mask: [page.getByRole("heading")]});
   });
 });
+
+test.beforeEach(async ({}, testInfo) => {
+  testInfo.snapshotSuffix = '';
+});
