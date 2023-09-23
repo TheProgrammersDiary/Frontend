@@ -39,9 +39,20 @@ jobs:
       with:
           compose-file: ".github/workflows/docker-compose.yaml"
           down-flags: "--volumes"
-    - name: Install Playwright Browsers
+    - name: Get installed Playwright version
+      id: playwright-version
+      run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+    - name: Cache playwright
+      uses: actions/cache@v3
+      id: playwright-cache
+      with:
+        path: |
+          ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+    - name: Install playwright browsers
       run: npx playwright install --with-deps
-    - name: Cache before
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+    - name: Cache snapshots before
       uses: actions/cache@v3
       with:
         path: "./tests/visual_regression/page.test.tsx-snapshots/"
@@ -49,7 +60,7 @@ jobs:
         restore-keys: ${{runner.os}}-visual_regression-page_test_tsx_snapshots
     - name: Run Playwright tests
       run: npx playwright test
-    - name: Cache after
+    - name: Cache snapshots after
       if: always()
       uses: actions/cache@v3
       with:
