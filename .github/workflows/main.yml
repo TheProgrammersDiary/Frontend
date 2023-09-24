@@ -39,23 +39,8 @@ jobs:
       with:
           compose-file: ".github/workflows/docker-compose.yaml"
           down-flags: "--volumes"
-    - name: Get installed Playwright version
-      run: |
-          PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
-          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV    
-    - name: Cache playwright
-      uses: actions/cache@v3
-      id: playwright-cache
-      with:
-          path: "~/.cache/ms-playwright"
-          key: "${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}"
-          restore-keys: ${{ runner.os }}-playwright-
     - name: Install playwright browsers
       run: npx playwright install --with-deps
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
-    - name: Install playwright dependencies
-      run: npx playwright install-deps
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v3
