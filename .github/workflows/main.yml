@@ -50,6 +50,7 @@ jobs:
         path: playwright-report/
         retention-days: 30
     - uses: actions/upload-artifact@v3
+      if: failure()
       with:
           name: images
           path: "./tests/visual_regression/**/*"
