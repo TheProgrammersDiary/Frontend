@@ -46,27 +46,13 @@ jobs:
       uses: actions/cache@v3
       id: playwright-cache
       with:
-        path: |
-          ~/.cache/ms-playwright
+        path: ~/.cache/ms-playwright
         key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
     - name: Install playwright browsers
       run: npx playwright install --with-deps
       if: steps.playwright-cache.outputs.cache-hit != 'true'
-    - name: Cache snapshots before
-      uses: actions/cache@v3
-      with:
-        path: "./tests/visual_regression/page.test.tsx-snapshots/"
-        key: ${{runner.os}}-visual_regression-page_test_tsx_snapshots-${{hashFiles('tests/visual_regression/page.test.tsx-snapshots/*.png')}}
-        restore-keys: ${{runner.os}}-visual_regression-page_test_tsx_snapshots
     - name: Run Playwright tests
       run: npx playwright test
-    - name: Cache snapshots after
-      if: always()
-      uses: actions/cache@v3
-      with:
-        path: "./tests/visual_regression/page.test.tsx-snapshots/"
-        key: ${{runner.os}}-visual_regression-page_test_tsx_snapshots-${{hashFiles('tests/visual_regression/page.test.tsx-snapshots/*.png')}}
-        restore-keys: ${{runner.os}}-visual_regression-page_test_tsx_snapshots
     - uses: actions/upload-artifact@v3
       if: always()
       with:
