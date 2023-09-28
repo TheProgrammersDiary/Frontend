@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@cypress/react": "^8.0.0",
     "@testing-library/user-event": "^14.5.1",
     "@vitejs/plugin-react": "^4.0.4",
     "axios": "^1.5.0",
@@ -23,6 +24,7 @@
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
     "autoprefixer": "^10.4.15",
+    "cypress": "^13.2.0",
     "jsdom": "^22.1.0",
     "postcss": "^8.4.29",
     "tailwindcss": "^3.3.3",

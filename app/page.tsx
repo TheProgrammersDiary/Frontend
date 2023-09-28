@@ -1,24 +1,32 @@
-import "globals.css";
+import "../globals.css";
 import { Metadata } from "next"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Programmers diary',
 }
 
-export default async function Page() {
-  const articleData = await fetch("http://localhost:8081/posts", { method: "GET", next: { revalidate: 10 }})
-    .then((response) => response.json());
-  console.log(articleData);
-  const articles = articleData.map(article =>
-    <li key={article.id}>
-      <Link href={"/post/" + article.id}>
-        <h2>{article.title}</h2>
-        <p>{article.author}</p>
-      </Link>
-    </li>
-  );
+export default function Page() {
+  const [articles, setArticles] = useState(null);
+  useEffect(() => {
+    const effect = async () => await fetch("http://localhost:8081/posts", { method: "GET", next: { revalidate: 10 } });
+    effect()
+      .then((response) => response.json())
+      .then(
+        response => setArticles(
+          response.map(
+            article =>
+              <li key={article.id}>
+                <Link href={"/post/" + article.id}>
+                  <h2>{article.title}</h2>
+                  <p>{article.author}</p>
+                </Link>
+              </li>
+          )
+        )
+      );
+  });
   return (
     <div>
       <div>
