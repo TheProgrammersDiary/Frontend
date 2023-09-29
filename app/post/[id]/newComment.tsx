@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import React from "react";
 
 export default function NewComment({postId}) {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     return (
         <div>
             <h1 className="text-4xl font-bold dark:text-white">Add comments</h1>
@@ -19,6 +19,7 @@ export default function NewComment({postId}) {
 
     async function onSubmit(data, event) {
         event.preventDefault();
+        reset();
         const body = { "author": "reactCommentAuthor", "content": data.content, "postId": postId };
         await fetch(
           "http://localhost:8080/comments/create",
