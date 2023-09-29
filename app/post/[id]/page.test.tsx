@@ -1,5 +1,5 @@
 import { expect, test, vi } from "vitest";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import Page from "./page";
 
 test("Post page displays correct data",
@@ -27,7 +27,8 @@ test("Post page displays correct data",
             },
         }));
         render(<Page />);
-        await waitFor(() => {
+        await waitFor(async () => {
+            expect(screen.getByText("Comments")).toBeDefined();
             expect(screen.getByText(postAuthor)).toBeDefined();
             expect(screen.getByText(postTitle)).toBeDefined();
             expect(screen.getByText(postContent)).toBeDefined();

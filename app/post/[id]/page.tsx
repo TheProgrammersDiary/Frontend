@@ -3,6 +3,8 @@
 import "../../../globals.css";
 import React, { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
+import NewComment from "./newComment";
+import Comments from "./comments";
 
 export default function Page() {
     const [article, setArticle] = useState(null);
@@ -21,11 +23,18 @@ export default function Page() {
         return (
             <div>
                 <div>
-                    <h1>{article.title}</h1>
-                    <p>{article.author}</p>
+                    <div>
+                        <h1>{article.title}</h1>
+                        <p>{article.author}</p>
+                    </div>
+                    <span>{article.content}</span>
                 </div>
-                <span>{article.content}</span>
+                <div>
+                    <h1>Comments</h1>
+                    <Comments postId={id} />
+                    <NewComment postId={id} />
+                </div>
             </div>
         );
-    };
+    }
 }

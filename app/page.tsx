@@ -1,3 +1,5 @@
+"use client"
+
 import "../globals.css";
 import { Metadata } from "next"
 import React, { useEffect, useState } from "react"
@@ -8,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  const [articles, setArticles] = useState(null);
+  const [articles, setArticles] = useState([]);
   useEffect(() => {
     const effect = async () => await fetch("http://localhost:8081/posts", { method: "GET", next: { revalidate: 10 } });
     effect()
