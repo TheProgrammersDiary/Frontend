@@ -18,7 +18,7 @@ export default function Comments({ postId }) {
                     )));
         }
         effect();
-    });
+    }, [postId]);
     return (
         <ul>{comments}</ul>
     );

@@ -18,7 +18,7 @@ export default function Page() {
                 .then(response => setArticle(response));
         }
         effect();
-    });
+    }, [id]);
     if (article) {
         return (
             <div>
