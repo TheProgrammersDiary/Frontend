@@ -3,7 +3,7 @@
 import "../../globals.css";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 export default function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -70,6 +70,6 @@ export default function SignUp() {
     await fetch(
       "http://localhost:8080/users/signup",
       { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json" } }
-    ).then(_ => {router.push("/")});
+    ).then(_ => {router.push("/login")});
   }
 }

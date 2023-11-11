@@ -23,7 +23,12 @@ export default function NewComment({postId}) {
         const body = { "author": "reactCommentAuthor", "content": data.content, "postId": postId };
         await fetch(
           "http://localhost:8080/comments/create",
-          { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json" } }
+          {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        }
         );
     }
 }
