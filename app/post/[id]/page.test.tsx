@@ -10,7 +10,6 @@ test("Post page displays correct data",
         global.fetch = vi.fn().mockImplementation(
             (url: string, _) => {
                 expect(url.includes("/2")).true;
-                console.log(url);
                 if(url.includes("/posts")) {
                     return Promise.resolve(
                         {
@@ -20,17 +19,6 @@ test("Post page displays correct data",
                         }
                     );
                 }
-                if(url.includes("/list-comments")) {
-                    return Promise.resolve(
-                        {
-                            json: () => Promise.resolve([
-                                { author: "a1", content: "c1" },
-                                { author: "a2", content: "c2" }
-                            ])
-                        }
-                    )
-                }
-                throw new Error("Unexpected path");
             }
         );
         vi.mock('next/navigation', () => ({
@@ -40,6 +28,7 @@ test("Post page displays correct data",
                 };
             },
         }));
+        vi.mock('./Comments', () => ({ default: () => {return <></>;} }));
         render(<Page />);
         await waitFor(async () => {
             expect(screen.getByText("Comments")).toBeDefined();

@@ -13,6 +13,15 @@ test("Shows main page with posts", async () => {
             }
         )
     );
+    vi.mock("next-auth/react", () => {
+        return {
+            useSession: vi.fn(
+                () => {
+                    return { data: {user: { username: "admin" }}, status: 'authenticated' };
+                }
+            )
+        };
+    });
     render(<Page />);
     expect(screen.getByText("Create a new post")).toBeDefined();
     expect(screen.getByText("Articles")).toBeDefined();
