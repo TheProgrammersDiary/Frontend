@@ -106,8 +106,7 @@ export default function Login() {
       { 
         method: "POST",
         body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        headers: { "Content-Type": "application/json" }
       }
     )
     .then(response => response.json())
