@@ -1,14 +1,9 @@
 "use client"
 
 import "../globals.css";
-import { Metadata } from "next"
 import React, { useEffect, useState } from "react"
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
-
-export const metadata: Metadata = {
-  title: 'Programmers diary',
-}
 
 export default function Page() {
   const { data: session } = useSession();
