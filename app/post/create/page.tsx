@@ -31,7 +31,12 @@ export default function Page() {
     const body = { "author": "reactAuthor", "title": data.title, "content": data.content };
     await fetch(
       "http://localhost:8081/posts/create",
-      { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json" } }
+      {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" },
+        credentials: "omit"
+      }
     ).then((response) => response.json())
       .then((data) => router.push("/post/" + data.id));
   }

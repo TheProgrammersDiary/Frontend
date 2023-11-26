@@ -3,11 +3,10 @@
 import "../../globals.css";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const router = useRouter();
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
@@ -110,8 +109,14 @@ export default function Login() {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       }
-    ).then(_ => {
-      router.push("/");
+    )
+    .then(response => response.json())
+    .then(response => {
+      signIn('credentials', { 
+        callbackUrl: '/',
+        username: response.username,
+        expiration: response.expirationDate
+      });
     });
   }
 }
