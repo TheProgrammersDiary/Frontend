@@ -1,5 +1,5 @@
-import { expect, test, describe, vi } from "vitest";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { expect, test, vi } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
 import Page from "./page";
 
 test("Shows main page with posts", async () => {
