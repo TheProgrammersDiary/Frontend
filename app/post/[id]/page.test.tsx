@@ -10,7 +10,6 @@ test("Post page displays correct data",
         global.fetch = vi.fn().mockImplementation(
             (url: string, _) => {
                 expect(url.includes("/2")).true;
-                if(url.includes("/posts")) {
                     return Promise.resolve(
                         {
                             json: () => Promise.resolve(
@@ -18,7 +17,6 @@ test("Post page displays correct data",
                             )
                         }
                     );
-                }
             }
         );
         vi.mock('next/navigation', () => ({
