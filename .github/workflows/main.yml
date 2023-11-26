@@ -2,10 +2,10 @@ name: Frontend CI/CD
 on:
   push:
     branches:
-        - main
+      - main
   pull_request:
     branches:
-        - main
+      - main
 jobs:
   test:
     runs-on: ubuntu-latest
