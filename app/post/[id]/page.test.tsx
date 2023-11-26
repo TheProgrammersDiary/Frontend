@@ -28,7 +28,7 @@ test("Post page displays correct data",
                 };
             },
         }));
-        vi.mock('./Comments', () => ({ default: () => {return <></>;} }));
+        vi.mock('./comments', () => ({ default: () => {return <></>;} }));
         render(<Page />);
         await waitFor(async () => {
             expect(screen.getByText("Comments")).toBeDefined();
