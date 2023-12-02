@@ -20,7 +20,6 @@ export default function Comments({ postId }) {
         effect();
     }, [postId]);
     return (
-        
         <ul>{comments.length > 0 ? comments : "No comments"}</ul>
     );
 }
