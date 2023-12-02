@@ -11,15 +11,16 @@ export default function Comments({ postId }) {
                 .then(response => setComments(
                     response.map(
                         comment =>
-                            <li key={comment.id}>
-                                <p>{comment.author}</p>
-                                <p>{comment.content}</p>
+                            <li key={comment.id} className="bg-gray-100 p-4 mt-4 rounded-lg break-all">
+                                <p className="text-gray-700 font-semibold">{comment.author}</p>
+                                <p className="text-gray-800">{comment.content}</p>
                             </li>
                     )));
         }
         effect();
     }, [postId]);
     return (
-        <ul>{comments}</ul>
+        
+        <ul>{comments.length > 0 ? comments : "No comments"}</ul>
     );
 }

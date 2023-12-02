@@ -15,6 +15,6 @@ test("Creates comment", async () => {
     render(<NewComment postId={"1"}/>);
     expect(screen.getByText("Your comment")).toBeDefined();
     await userEvent.type(screen.getByLabelText("Your comment"), "comment");
-    await userEvent.click(screen.getByRole("button", { name: "Submit" }));
+    await userEvent.click(screen.getByRole("button", { name: "Post comment" }));
     expect(global.fetch).toHaveBeenCalledOnce();
 });
