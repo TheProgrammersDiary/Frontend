@@ -4,9 +4,11 @@ import "../../globals.css";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { signIn } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const router = useRouter();
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
@@ -54,6 +56,7 @@ export default function Login() {
         <div className="flex mt-4 gap-x-2">
           <button
             type="button"
+            onClick={(e) => router.push("http://localhost:8080/oauth2/authorization/google")}
             className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset-1 focus:ring-violet-600"
           >
             <svg
