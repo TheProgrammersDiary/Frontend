@@ -6,6 +6,9 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
   title: 'Programmers diary',
+  icons: {
+    icon: "/favicon.ico"
+  }
 }
 
 export default async function RootLayout({
