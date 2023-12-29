@@ -13,7 +13,7 @@ export default function Page() {
     const effect = async () => {
       await fetch(
         "http://localhost:8081/posts/" + id,
-        { method: "GET" }
+        { method: "GET", credentials: "omit" }
       ).then(response => response.json())
         .then(response => setArticle(response));
     }

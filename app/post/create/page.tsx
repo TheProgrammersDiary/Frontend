@@ -61,7 +61,7 @@ export default function Page() {
         method: "POST",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" },
-        credentials: "omit"
+        credentials: "include"
       }
     ).then((response) => response.json())
       .then((data) => router.push("/post/" + data.id));

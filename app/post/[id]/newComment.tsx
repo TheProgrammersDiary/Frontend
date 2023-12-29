@@ -26,7 +26,7 @@ export default function NewComment({postId}) {
             method: "POST",
             body: JSON.stringify(body),
             headers: { "Content-Type": "application/json" },
-            credentials: "include",
+            credentials: "omit",
         }
         );
     }
