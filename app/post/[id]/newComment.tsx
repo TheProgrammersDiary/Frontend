@@ -1,8 +1,11 @@
 import "../../../globals.css";
 import { useForm } from "react-hook-form";
 import React from "react";
+import { useSession } from "next-auth/react"
 
 export default function NewComment({postId}) {
+    const { data: session, status } = useSession();
+    const username = session?.user?.name || "Incognito";
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     return (
         <div>
@@ -19,7 +22,7 @@ export default function NewComment({postId}) {
     async function onSubmit(data, event) {
         event.preventDefault();
         reset();
-        const body = { "author": "reactCommentAuthor", "content": data.content, "postId": postId };
+        const body = { "author": username, "content": data.content, "postId": postId };
         await fetch(
           "http://localhost:8080/comments/create",
           {
