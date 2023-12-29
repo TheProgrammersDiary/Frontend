@@ -4,16 +4,24 @@ import Page from "./page";
 
 test("Post page displays correct data",
     async () => {
-        const postAuthor = "reactAuthor";
         const postTitle = "title";
         const postContent = "content";
+        vi.mock("next-auth/react", () => {
+            return {
+                useSession: vi.fn(
+                    () => {
+                        return { data: {user: { username: "reactAuthor" }}, status: 'authenticated' };
+                    }
+                )
+            };
+        });
         global.fetch = vi.fn().mockImplementation(
             (url: string, _) => {
                 expect(url.includes("/2")).true;
                     return Promise.resolve(
                         {
                             json: () => Promise.resolve(
-                                { author: postAuthor, title: postTitle, content: postContent }
+                                { author: "reactAuthor", title: postTitle, content: postContent }
                             )
                         }
                     );
@@ -30,7 +38,7 @@ test("Post page displays correct data",
         render(<Page />);
         await waitFor(async () => {
             expect(screen.getByText("Comments")).toBeDefined();
-            expect(screen.getByText(postAuthor)).toBeDefined();
+            expect(screen.getByText("reactAuthor")).toBeDefined();
             expect(screen.getByText(postTitle)).toBeDefined();
             expect(screen.getByText(postContent)).toBeDefined();
         });

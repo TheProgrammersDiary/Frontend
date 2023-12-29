@@ -5,6 +5,15 @@ import userEvent from "@testing-library/user-event";
 
 test("Creates comment", async () => {
     const comment = "my comment";
+    vi.mock("next-auth/react", () => {
+        return {
+            useSession: vi.fn(
+                () => {
+                    return { data: {user: { username: "a1" }}, status: 'authenticated' };
+                }
+            )
+        };
+    });
     global.fetch = vi.fn().mockImplementation(
         (_, __) => Promise.resolve(
             {
