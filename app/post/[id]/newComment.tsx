@@ -24,7 +24,7 @@ export default function NewComment({postId}) {
         reset();
         const body = { "author": username, "content": data.content, "postId": postId };
         await fetch(
-          "http://localhost:8080/comments/create",
+          "https://localhost:8080/comments/create",
           {
             method: "POST",
             body: JSON.stringify(body),

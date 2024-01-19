@@ -12,7 +12,7 @@ export default function Page() {
   useEffect(() => {
     const effect = async () => {
       await fetch(
-        "http://localhost:8081/posts/" + id,
+        "https://localhost:8081/posts/" + id,
         { method: "GET", credentials: "omit" }
       ).then(response => response.json())
         .then(response => setArticle(response));

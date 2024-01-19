@@ -56,7 +56,7 @@ export default function Login() {
         <div className="flex mt-4 gap-x-2">
           <button
             type="button"
-            onClick={(e) => router.push("http://localhost:8080/oauth2/authorization/google")}
+            onClick={(e) => router.push("https://localhost:8080/oauth2/authorization/google")}
             className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset-1 focus:ring-violet-600"
           >
             <svg
@@ -87,7 +87,7 @@ export default function Login() {
     event.preventDefault();
     const body = {"username": data.username, "password": data.password};
     await fetch(
-      "http://localhost:8080/users/login",
+      "https://localhost:8080/users/login",
       { 
         method: "POST",
         body: JSON.stringify(body),

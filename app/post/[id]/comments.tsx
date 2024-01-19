@@ -5,7 +5,7 @@ export default function Comments({ postId }) {
     useEffect(() => {
         const effect = async () => {
             await fetch(
-                "http://localhost:8080/comments/list-comments/" + postId,
+                "https://localhost:8080/comments/list-comments/" + postId,
                 { method: "GET", credentials: "omit", }
             ).then(response => response.json())
                 .then(response => setComments(

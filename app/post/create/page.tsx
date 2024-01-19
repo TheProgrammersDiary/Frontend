@@ -56,7 +56,7 @@ export default function Page() {
     event.preventDefault();
     const body = { "author": "reactAuthor", "title": data.title, "content": data.content };
     await fetch(
-      "http://localhost:8081/posts/create",
+      "https://localhost:8081/posts/create",
       {
         method: "POST",
         body: JSON.stringify(body),

@@ -9,7 +9,7 @@ export default function Page() {
   const { data: session } = useSession();
   const [articles, setArticles] = useState([]);
   useEffect(() => {
-    const effect = async () => await fetch("http://localhost:8081/posts", { method: "GET", next: { revalidate: 10 } });
+    const effect = async () => await fetch("https://localhost:8081/posts", { method: "GET", next: { revalidate: 10 } });
     effect()
       .then((response) => response.json())
       .then(

@@ -68,7 +68,7 @@ export default function SignUp() {
     event.preventDefault();
     const body = {"username": data.username, "email": data.email, "password": data.password};
     await fetch(
-      "http://localhost:8080/users/signup",
+      "https://localhost:8080/users/signup",
       { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json" } }
     ).then(_ => {router.push("/login")});
   }
