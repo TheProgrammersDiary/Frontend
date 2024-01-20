@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 3000
 
-ENTRYPOINT ["node", "server.js"]
+ENTRYPOINT ["npm", "run", "dev"]
