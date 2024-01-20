@@ -46,7 +46,7 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test
       env:
-          ssl_blog_passphrase: ${{secrets.SSL_BLOG_PASSPHRASE}};
+        ssl_blog_passphrase: ${{secrets.SSL_BLOG_PASSPHRASE}};
     - uses: actions/upload-artifact@v3
       if: failure()
       with:
