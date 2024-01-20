@@ -20,7 +20,7 @@ app.prepare().then(() => {
         await handle(req, res, parsedUrl);
     }).listen(port, (err) => {
         if (err) throw err;
-        console.log('ready - started server on url: https://localhost:' + port);
+        console.log('ready - started server on port: ' + port);
     });
 } catch (error) {
     console.error('Error starting the server:', error);

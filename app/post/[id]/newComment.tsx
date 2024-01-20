@@ -2,6 +2,7 @@ import "../../../globals.css";
 import { useForm } from "react-hook-form";
 import React from "react";
 import { useSession } from "next-auth/react"
+import {blogUrl} from "../../../next.config.js";
 
 export default function NewComment({postId}) {
     const { data: session, status } = useSession();
@@ -24,7 +25,7 @@ export default function NewComment({postId}) {
         reset();
         const body = { "author": username, "content": data.content, "postId": postId };
         await fetch(
-          "https://localhost:8080/comments/create",
+          blogUrl + "/comments/create",
           {
             method: "POST",
             body: JSON.stringify(body),

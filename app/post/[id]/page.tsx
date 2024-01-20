@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
 import NewComment from "./newComment";
 import Comments from "./comments";
+import {postUrl} from "../../../next.config.js";
 
 export default function Page() {
   const [article, setArticle] = useState(null);
@@ -12,7 +13,7 @@ export default function Page() {
   useEffect(() => {
     const effect = async () => {
       await fetch(
-        "https://localhost:8081/posts/" + id,
+        postUrl + "/posts/" + id,
         { method: "GET", credentials: "omit" }
       ).then(response => response.json())
         .then(response => setArticle(response));

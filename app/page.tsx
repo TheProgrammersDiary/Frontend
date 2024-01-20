@@ -4,12 +4,13 @@ import "../globals.css";
 import React, { useEffect, useState } from "react"
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
+import {postUrl} from "../next.config.js";
 
 export default function Page() {
   const { data: session } = useSession();
   const [articles, setArticles] = useState([]);
   useEffect(() => {
-    const effect = async () => await fetch("https://localhost:8081/posts", { method: "GET", next: { revalidate: 10 } });
+    const effect = async () => await fetch(postUrl + "/posts", { method: "GET", next: { revalidate: 10 } });
     effect()
       .then((response) => response.json())
       .then(

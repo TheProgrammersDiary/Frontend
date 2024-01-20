@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+import {blogUrl} from "../../next.config.js";
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -56,7 +57,7 @@ export default function Login() {
         <div className="flex mt-4 gap-x-2">
           <button
             type="button"
-            onClick={(e) => router.push("https://localhost:8080/oauth2/authorization/google")}
+            onClick={(e) => router.push(blogUrl + "/oauth2/authorization/google")}
             className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset-1 focus:ring-violet-600"
           >
             <svg
@@ -87,7 +88,7 @@ export default function Login() {
     event.preventDefault();
     const body = {"username": data.username, "password": data.password};
     await fetch(
-      "https://localhost:8080/users/login",
+      blogUrl + "/users/login",
       { 
         method: "POST",
         body: JSON.stringify(body),

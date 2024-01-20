@@ -4,6 +4,7 @@ import "../../../globals.css";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation'
+import {postUrl} from "../../../next.config.js";
 
 export default function Page() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -56,7 +57,7 @@ export default function Page() {
     event.preventDefault();
     const body = { "author": "reactAuthor", "title": data.title, "content": data.content };
     await fetch(
-      "https://localhost:8081/posts/create",
+      postUrl + "/posts/create",
       {
         method: "POST",
         body: JSON.stringify(body),

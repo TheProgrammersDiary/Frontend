@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 
+import {blogUrl} from "../../../next.config.js";
+
 export default function Comments({ postId }) {
     const [comments, setComments] = useState([]);
     useEffect(() => {
         const effect = async () => {
             await fetch(
-                "https://localhost:8080/comments/list-comments/" + postId,
+                blogUrl + "/comments/list-comments/" + postId,
                 { method: "GET", credentials: "omit", }
             ).then(response => response.json())
                 .then(response => setComments(
