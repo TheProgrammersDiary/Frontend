@@ -23,6 +23,7 @@ app.prepare().then(() => {
         console.log('ready - started server on url: https://localhost:' + port);
     });
 } catch (error) {
+    console.error("Value of " + passphrase);
     console.error('Error starting the server:', error);
   }
 });
