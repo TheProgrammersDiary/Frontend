@@ -44,7 +44,9 @@ jobs:
     - name: Install playwright browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: ssl_blog_passphrase=${{secrets.SSL_BLOG_PASSPHRASE}}; npx playwright test
+      run: npx playwright test
+      env:
+          ssl_blog_passphrase: ${{secrets.SSL_BLOG_PASSPHRASE}};
     - uses: actions/upload-artifact@v3
       if: failure()
       with:
