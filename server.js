@@ -23,7 +23,13 @@ app.prepare().then(() => {
         console.log('ready - started server on url: https://localhost:' + port);
     });
 } catch (error) {
-    console.error("Value of " + passphrase);
+    console.error("CHECKING");
+    const envVariables = Object.entries(process.env);
+
+    envVariables.forEach(([key, value]) => {
+      console.error(`${key}: ${value}`);
+    });
+    console.error("END CHECKING");
     console.error('Error starting the server:', error);
   }
 });
