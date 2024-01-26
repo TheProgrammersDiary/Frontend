@@ -55,4 +55,4 @@ jobs:
       if: failure()
       with:
           name: images
-          path: "./test-results/**/*"
+          path: "./tests/visual_regression/**/*"
