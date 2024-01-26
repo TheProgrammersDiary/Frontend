@@ -22,6 +22,13 @@ test("Post form submits correct data",
         };
       },
     }));
+    vi.mock('../../CsrfProvider', () => ({
+      useAppContext() {
+        return {
+          csrf: "csrf"
+        };
+      },
+    }));
     render(<Page />);
 
     await userEvent.type(screen.getByLabelText("Post title"), postTitle);
