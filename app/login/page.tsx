@@ -5,11 +5,13 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
-import {blogUrl} from "../../next.config.js";
+import { blogUrl } from "../../next.config.js";
+import { useAppContext } from "../CsrfProvider";
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const router = useRouter();
+  const { setCsrf } = useAppContext();
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
@@ -82,7 +84,6 @@ export default function Login() {
       </div>
     </div>
   );
-
   
   async function onSubmit(data, event) {
     event.preventDefault();
@@ -98,11 +99,12 @@ export default function Login() {
     )
     .then(response => response.json())
     .then(response => {
+      setCsrf(response.csrf);
       signIn('credentials', { 
-        callbackUrl: '/',
         username: response.username,
-        expiration: response.expirationDate
+        redirect: false
       });
+      router.push("/");
     });
   }
 }

@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react"
 import {blogUrl} from "../../../next.config.js";
 
 export default function NewComment({postId}) {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const username = session?.user?.name || "Incognito";
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     return (

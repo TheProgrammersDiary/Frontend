@@ -4,6 +4,8 @@ import { Metadata } from "next"
 import React from "react"
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Link from "next/link";
+import { CsrfProvider } from "./CsrfProvider";
+import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   title: 'Programmers diary',
@@ -20,17 +22,20 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   return (
     <html lang="en">
-      <NextAuthProvider session={session}>
-        <body>
-          <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-2">
-            <Link className="flex items-center flex-shrink-0 text-white mr-10" href="/">
-              <img src="/favicon.ico" className="h-10" alt="Programmers' diary logo" />
-              <span className="font-semibold text-xl tracking-tight">Programmers' diary</span>
-            </Link>
-          </nav>
-          {children}
-        </body>
-      </NextAuthProvider>
+        <CsrfProvider>
+          <NextAuthProvider session={session}>
+            <body>
+              <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-2">
+                <Link href="/" className="flex items-center flex-shrink-0 text-white mr-10">
+                  <img src="/favicon.ico" className="h-10" alt="Programmers' diary logo" />
+                  <span className="font-semibold text-xl tracking-tight">Programmers' diary</span>
+                </Link>
+                <ClientLayout />
+              </nav>
+              {children}
+            </body>
+          </NextAuthProvider>
+        </CsrfProvider>
     </html>
   )
 }
