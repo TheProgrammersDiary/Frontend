@@ -29,7 +29,7 @@ export default function Account() {
                   <input
                     {...register("currentPassword", { required: true })}
                     name="currentPassword"
-                    type="input"
+                    type="password"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
@@ -43,7 +43,7 @@ export default function Account() {
                   <input
                     {...register("repeatedCurrentPassword", { required: true })}
                     name="repeatedCurrentPassword"
-                    type="input"
+                    type="password"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
