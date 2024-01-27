@@ -5,19 +5,27 @@ import React, { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
 import NewComment from "./newComment";
 import Comments from "./comments";
-import {postUrl} from "../../../next.config.js";
+import { postUrl } from "../../../next.config.js";
 
 export default function Page() {
   const [article, setArticle] = useState(null);
   const { id } = useParams();
   useEffect(() => {
     const effect = async () => {
-      await fetch(
-        postUrl + "/posts/" + id,
-        { method: "GET", credentials: "omit" }
-      ).then(response => response.json())
-        .then(response => setArticle(response));
-    }
+      try {
+        const response = await fetch(
+          postUrl + "/posts/" + id,
+          { method: "GET", credentials: "omit" }
+        );
+        if (response.status === 404) {
+          const text = await response.text();
+          throw new Error(text); 
+        }
+        const responseData = await response.json();
+        setArticle(responseData);
+      } catch (error) {
+      }
+    };
     effect();
   }, [id]);
   if (article) {

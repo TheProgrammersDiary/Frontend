@@ -7,11 +7,13 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { blogUrl } from "../../next.config.js";
 import { useAppContext } from "../MemoryStorage";
+import { useState } from "react";
 
 export default function Login() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit } = useForm();
   const router = useRouter();
   const { setCsrf, setLoginType } = useAppContext();
+  const [loginErrorMessage, setLoginErrorMessage] = useState(<p></p>);
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
@@ -52,7 +54,7 @@ export default function Login() {
             </button>
           </div>
         </form>
-
+        {loginErrorMessage}
         <div className="relative flex items-center justify-center w-full mt-6 border border-t">
           <div className="absolute px-5 bg-white">Or</div>
         </div>
@@ -84,28 +86,34 @@ export default function Login() {
       </div>
     </div>
   );
-  
+
   async function onSubmit(data, event) {
     event.preventDefault();
-    const body = {"username": data.username, "password": data.password};
-    await fetch(
-      blogUrl + "/users/login",
-      { 
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include"
+    const body = { "username": data.username, "password": data.password };
+    try {
+      const response = await fetch(
+        blogUrl + "/users/login",
+        {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include"
+        }
+      );
+      if (response.status === 401) {
+        const text = await response.text();
+        throw new Error(text);
       }
-    )
-    .then(response => response.json())
-    .then(response => {
-      setCsrf(response.csrf);
+      const json = await response.json();
+      setCsrf(json.csrf);
       setLoginType("local");
-      signIn('credentials', { 
-        username: response.username,
+      signIn('credentials', {
+        username: json.username,
         redirect: false
       });
       router.push("/");
-    });
+    } catch (error) {
+      setLoginErrorMessage(<p className="text-red-500">{error.message}</p>);
+    }
   }
 }
