@@ -7,7 +7,7 @@ import { useAppContext } from "../MemoryStorage";
 import { useState } from "react";
 
 export default function Account() {
-  const { register, setError, handleSubmit, formState } = useForm();
+  const { register, setError, reset, handleSubmit, formState } = useForm();
   const { csrf, loginType } = useAppContext();
   const [responseMessage, setResponseMessage] = useState(<p></p>);
 
@@ -35,20 +35,6 @@ export default function Account() {
                 </div>
                 <div className="mb-4">
                   <label
-                    htmlFor="repeatedCurrentPassword"
-                    className="block text-sm font-semibold text-gray-800"
-                  >
-                    Repeat current password
-                  </label>
-                  <input
-                    {...register("repeatedCurrentPassword", { required: true })}
-                    name="repeatedCurrentPassword"
-                    type="password"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                  />
-                </div>
-                <div className="mb-2">
-                  <label
                     htmlFor="newPassword"
                     className="block text-sm font-semibold text-gray-800"
                   >
@@ -61,14 +47,28 @@ export default function Account() {
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="repeatedNewPassword"
+                    className="block text-sm font-semibold text-gray-800"
+                  >
+                    Repeat new password
+                  </label>
+                  <input
+                    {...register("repeatedNewPassword", { required: true })}
+                    name="repeatedNewPassword"
+                    type="password"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
                 <div className="mt-2">
                   <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
                     Change password
                   </button>
                 </div>
               </form>
-              {formState.errors.repeatedCurrentPassword && (
-                <p className="text-red-500">{formState.errors.repeatedCurrentPassword.message}</p>
+              {formState.errors.repeatedNewPassword && (
+                <p className="text-red-500">{formState.errors.repeatedNewPassword.message}</p>
               )
               }
               {responseMessage}
@@ -83,10 +83,10 @@ export default function Account() {
     setResponseMessage(<p></p>);
     event.preventDefault();
     const body = { "currentPassword": data.currentPassword, "newPassword": data.newPassword };
-    if (data.currentPassword !== data.repeatedCurrentPassword) {
-      setError("repeatedCurrentPassword", {
+    if (data.newPassword !== data.repeatedNewPassword) {
+      setError("repeatedNewPassword", {
         type: "manual",
-        message: "Current password and repeated current password do not match.",
+        message: "New password and repeated new password do not match.",
       });
       return;
     }
@@ -99,7 +99,10 @@ export default function Account() {
         credentials: "include"
       }
     )
-      .then(_ => setResponseMessage(<p className="text-green-500">Password changed successfully.</p>))
+      .then(_ => {
+        reset();
+        setResponseMessage(<p className="text-green-500">Password changed successfully.</p>);
+      })
       .catch(error => setResponseMessage(<p className="text-red-500">{error.message}</p>));
   }
 }
