@@ -22,7 +22,7 @@ test("Post form submits correct data",
         };
       },
     }));
-    vi.mock('../../CsrfProvider', () => ({
+    vi.mock('../../MemoryStorage', () => ({
       useAppContext() {
         return {
           csrf: "csrf"

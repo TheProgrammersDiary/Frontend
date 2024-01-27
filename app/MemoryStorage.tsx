@@ -4,15 +4,16 @@ import React, { createContext, useContext, useState } from 'react';
 
 const AppContext = createContext(null);
 
-export function CsrfProvider ({
+export function MemoryStorage ({
   children
 }: {
   children: React.ReactNode
 }) {
   const [csrf, setCsrf] = useState(null);
+  const [loginType, setLoginType] = useState(null);
   
   return (
-    <AppContext.Provider value={{ csrf, setCsrf }}>
+    <AppContext.Provider value={{ csrf, setCsrf, loginType, setLoginType }}>
       {children}
     </AppContext.Provider>
   );

@@ -4,7 +4,7 @@ import { Metadata } from "next"
 import React from "react"
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Link from "next/link";
-import { CsrfProvider } from "./CsrfProvider";
+import { MemoryStorage } from "./MemoryStorage";
 import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   return (
     <html lang="en">
-        <CsrfProvider>
+        <MemoryStorage>
           <NextAuthProvider session={session}>
             <body>
               <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-2">
@@ -35,7 +35,7 @@ export default async function RootLayout({
               {children}
             </body>
           </NextAuthProvider>
-        </CsrfProvider>
+        </MemoryStorage>
     </html>
   )
 }

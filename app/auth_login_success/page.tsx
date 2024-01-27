@@ -5,17 +5,18 @@ import React, { useEffect } from 'react';
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { useAppContext } from '../CsrfProvider';
+import { useAppContext } from '../MemoryStorage';
 
 export default function AuthLoginSuccess() {
   const searchParams = useSearchParams();
   const username = searchParams.get('username');
   const csrf = searchParams.get('csrf');
-  const { setCsrf } = useAppContext();
+  const { setCsrf, setLoginType } = useAppContext();
   const router = useRouter();
 
   useEffect(() => {
     setCsrf(csrf);
+    setLoginType("oauth");
     signIn('credentials', {
       username: username,
       redirect: false,

@@ -4,7 +4,7 @@ import "../../globals.css";
 import { useEffect } from 'react';
 import { signOut } from 'next-auth/react';
 import {blogUrl} from "../../next.config.js";
-import { useAppContext } from "../CsrfProvider";
+import { useAppContext } from "../MemoryStorage";
 import { useRouter } from 'next/navigation.js';
 
 export default function Logout() {
