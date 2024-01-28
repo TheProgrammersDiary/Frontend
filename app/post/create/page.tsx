@@ -13,6 +13,9 @@ export default function Page() {
   const router = useRouter();
   const { csrf } = useAppContext();
   const { data: session } = useSession();
+  if(!session) {
+    return (<p>You need to login to create a post.</p>);
+  }
   const username = session.user.name;
 
   return (
