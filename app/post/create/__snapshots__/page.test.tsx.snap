@@ -2,7 +2,6 @@
 
 exports[`Post form submits correct data 1`] = `
 {
-  "author": "reactAuthor",
   "content": "content",
   "title": "title",
 }

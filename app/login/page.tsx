@@ -22,14 +22,14 @@ export default function Login() {
         <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label
-              htmlFor="username"
+              htmlFor="email"
               className="block text-sm font-semibold text-gray-800"
             >
-              Username
+              Email
             </label>
             <input
-              {...register("username", { required: true })}
-              name="username"
+              {...register("email", { required: true })}
+              name="email"
               type="input"
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
@@ -95,7 +95,7 @@ export default function Login() {
 
   async function onSubmit(data, event) {
     event.preventDefault();
-    const body = { "username": data.username, "password": data.password };
+    const body = { "email": data.email, "password": data.password };
     try {
       const response = await fetch(
         blogUrl + "/users/login",

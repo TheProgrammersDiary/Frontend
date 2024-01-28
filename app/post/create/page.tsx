@@ -6,11 +6,14 @@ import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation'
 import {postUrl} from "../../../next.config.js";
 import { useAppContext } from "../../MemoryStorage";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const router = useRouter();
   const { csrf } = useAppContext();
+  const { data: session } = useSession();
+  const username = session.user.name;
 
   return (
     <div className="p-8">
@@ -57,7 +60,7 @@ export default function Page() {
 
   async function onSubmit(data, event) {
     event.preventDefault();
-    const body = { "author": "reactAuthor", "title": data.title, "content": data.content };
+    const body = { "author": username, "title": data.title, "content": data.content };
     await fetch(
       postUrl + "/posts/create",
       {

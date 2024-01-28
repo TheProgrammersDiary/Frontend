@@ -1,5 +1,5 @@
 import { expect, test, vi } from "vitest";
-import { render, screen} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 import Page from "./page";
 
@@ -12,16 +12,25 @@ test("Post form submits correct data",
       (_, { body }) => {
         const parsedBody = JSON.parse(body);
         expect(parsedBody).toMatchSnapshot();
-        return Promise.resolve({json: () => Promise.resolve({id: postId, ...parsedBody })});
+        return Promise.resolve({ json: () => Promise.resolve({ id: postId, ...parsedBody }) });
       }
     );
     vi.mock('next/navigation', () => ({
       useRouter() {
         return {
-          push: (path) => {expect(path).toMatchSnapshot()}
+          push: (path) => { expect(path).toMatchSnapshot() }
         };
       },
     }));
+    vi.mock("next-auth/react", () => {
+      return {
+        useSession: vi.fn(
+          () => {
+            return { data: { user: { username: "admin" } }, status: 'authenticated' };
+          }
+        )
+      };
+    });
     vi.mock('../../MemoryStorage', () => ({
       useAppContext() {
         return {
