@@ -55,6 +55,12 @@ export default function Login() {
           </div>
         </form>
         {loginErrorMessage}
+        <Link
+          href="/request-password-reset"
+          className="font-medium text-blue-600 hover:underline"
+        >
+          Forgot password?
+        </Link>
         <div className="relative flex items-center justify-center w-full mt-6 border border-t">
           <div className="absolute px-5 bg-white">Or</div>
         </div>
