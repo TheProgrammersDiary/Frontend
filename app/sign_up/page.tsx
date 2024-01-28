@@ -4,7 +4,7 @@ import "../../globals.css";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation';
-import {blogUrl} from "../../next.config.js";
+import { blogUrl } from "../../next.config.js";
 
 export default function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -15,17 +15,6 @@ export default function SignUp() {
       <div className="w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
         <h1 className="text-3xl font-bold text-center text-gray-700">Sign up</h1>
         <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-            <label htmlFor="nickname" className="block text-sm font-semibold text-gray-800">
-              Username
-            </label>
-            <input
-              {...register("username", { required: true })}
-              name= "username"
-              type="text"
-              className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-            />
-          </div>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-semibold text-gray-800">
               Email
@@ -34,6 +23,17 @@ export default function SignUp() {
               {...register("email", { required: true })}
               name="email"
               type="email"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="nickname" className="block text-sm font-semibold text-gray-800">
+              Username
+            </label>
+            <input
+              {...register("username", { required: true })}
+              name="username"
+              type="text"
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -67,10 +67,10 @@ export default function SignUp() {
 
   async function onSubmit(data, event) {
     event.preventDefault();
-    const body = {"username": data.username, "email": data.email, "password": data.password};
+    const body = { "username": data.username, "email": data.email, "password": data.password };
     await fetch(
       blogUrl + "/users/signup",
       { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json" } }
-    ).then(_ => {router.push("/login")});
+    ).then(_ => { router.push("/login") });
   }
 }
