@@ -4,26 +4,45 @@ import "../globals.css";
 import React, { useEffect, useState } from "react"
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
-import {postUrl} from "../next.config.js";
+import { postUrl } from "../next.config.js";
 
 export default function Page() {
   const { data: session } = useSession();
   const [articles, setArticles] = useState([]);
+  const [requestStatus, setRequestStatus] = useState(
+    <div className="flex items-center justify-center">
+      <p className="text-blue-500">Loading</p>
+    </div>
+  );
   useEffect(() => {
-    const effect = async () => await fetch(postUrl + "/posts", { method: "GET", next: { revalidate: 10 } });
-    effect()
-      .then((response) => response.json())
-      .then(
-        response => setArticles(
-          response.map(
-            article =>
+    const fetchData = async () => {
+      try {
+        const response = await fetch(postUrl + "/posts", { method: "GET", next: { revalidate: 10 } });
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(text);
+        }
+
+        const data = await response.json();
+
+        setArticles(
+          data.map((article) => (
             <Link key={article.id} href={"/post/" + article.id} className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{article.title}</h5>
-            <p className="font-normal text-gray-700 dark:text-gray-400">{article.author}</p>
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{article.title}</h5>
+              <p className="font-normal text-gray-700 dark:text-gray-400">{article.author}</p>
             </Link>
-          )
-        )
-      );
+          ))
+        );
+      } catch (error) {
+        setRequestStatus(
+          <div className="flex items-center justify-center">
+            <p className="text-red-500">{"Error fetching data: " + error.message}</p>
+          </div>
+        );
+      }
+    };
+
+    fetchData();
   }, []);
   return (
     <div>
@@ -38,6 +57,7 @@ export default function Page() {
           </h1>
         </div>
         <ul className="list-none">{articles}</ul>
+        {requestStatus}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ test("Shows main page with posts", async () => {
     global.fetch = vi.fn().mockImplementation(
         (_, __) => Promise.resolve(
             {
+                ok: true,
                 json: () => Promise.resolve([
                     { title: "t1", author: "a1" },
                     { title: "t2", author: "a2" }
@@ -17,7 +18,7 @@ test("Shows main page with posts", async () => {
         return {
             useSession: vi.fn(
                 () => {
-                    return { data: {user: { username: "admin" }}, status: 'authenticated' };
+                    return { data: { user: { username: "admin" } }, status: 'authenticated' };
                 }
             )
         };
