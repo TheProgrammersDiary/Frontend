@@ -33,6 +33,7 @@ export default function Page() {
             </Link>
           ))
         );
+        setRequestStatus(<div></div>);
       } catch (error) {
         setRequestStatus(
           <div className="flex items-center justify-center">
