@@ -39,7 +39,7 @@ export default function Page() {
             <p className="mt-2 text-gray-500">
               {article.author}
             </p>
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-600 break-all">
               {article.content}
             </p>
             <div className="mt-4 w-full">
@@ -54,7 +54,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-
     );
   }
 }
