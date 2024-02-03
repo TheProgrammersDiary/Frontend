@@ -8,8 +8,8 @@ test("Shows main page with posts", async () => {
             {
                 ok: true,
                 json: () => Promise.resolve([
-                    { title: "t1", author: "a1" },
-                    { title: "t2", author: "a2" }
+                    { title: "t1", authorName: "a1" },
+                    { title: "t2", authorName: "a2" }
                 ])
             }
         )

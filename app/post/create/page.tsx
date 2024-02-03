@@ -85,7 +85,7 @@ export default function Page() {
 
   async function onSubmit(data, event) {
     event.preventDefault();
-    if (id) {
+    if (!id) {
       const body = { "author": username, "title": data.title, "content": data.content };
       await fetch(
         postUrl + "/posts/create",
@@ -107,8 +107,7 @@ export default function Page() {
           headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": csrf },
           credentials: "include"
         }
-      ).then((response) => response.json())
-        .then((data) => router.push("/post/" + data.id));
+      ).then(_ => router.push("/post/" + id));
     }
   }
 }

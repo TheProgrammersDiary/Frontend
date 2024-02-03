@@ -21,6 +21,11 @@ test("Post form submits correct data",
           push: (path) => { expect(path).toMatchSnapshot() }
         };
       },
+      useSearchParams() {
+        return {
+          get: (id) => ""
+        };
+      },
     }));
     vi.mock("next-auth/react", () => {
       return {
