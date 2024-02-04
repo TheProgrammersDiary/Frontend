@@ -23,7 +23,7 @@ test("Post form submits correct data",
       },
       useSearchParams() {
         return {
-          get: (id) => ""
+          get: (id) => "abc"
         };
       },
     }));

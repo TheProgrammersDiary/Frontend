@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import React from "react";
 import { useSession } from "next-auth/react"
 import {blogUrl} from "../../../next.config.js";
+import { useParams } from "next/navigation";
 
-export default function NewComment({postId}) {
+export default function NewComment() {
+    const { postId } = useParams();
     const { data: session } = useSession();
     const username = session?.user?.name || "Incognito";
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>

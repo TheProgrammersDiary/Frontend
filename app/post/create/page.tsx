@@ -11,13 +11,14 @@ import { useSession } from "next-auth/react";
 export default function Page() {
   const { register, handleSubmit, setValue } = useForm();
   const router = useRouter();
-  const id = useSearchParams().get('id');
-  if (id) {
+  const postId = useSearchParams().get('postId');
+  const version = useSearchParams().get('version');
+  if (postId) {
     useEffect(() => {
       const effect = async () => {
         try {
           const response = await fetch(
-            postUrl + "/posts/" + id,
+            postUrl + "/posts/" + postId + "/" + version,
             { method: "GET", credentials: "include" }
           );
           if (response.status === 404) {
@@ -31,7 +32,7 @@ export default function Page() {
         }
       };
       effect();
-    }, [id]);
+    }, [postId]);
   }
   const { csrf } = useAppContext();
   const { data: session } = useSession();
@@ -85,7 +86,7 @@ export default function Page() {
 
   async function onSubmit(data, event) {
     event.preventDefault();
-    if (!id) {
+    if (!postId) {
       const body = { "author": username, "title": data.title, "content": data.content };
       await fetch(
         postUrl + "/posts/create",
@@ -96,9 +97,9 @@ export default function Page() {
           credentials: "include"
         }
       ).then((response) => response.json())
-        .then((data) => router.push("/post/" + data.id));
+        .then((data) => router.push("/post/" + data.postId));
     } else {
-      const body = { "id": id, "title": data.title, "content": data.content };
+      const body = { "id": postId, "title": data.title, "content": data.content };
       await fetch(
         postUrl + "/posts/edit",
         {
@@ -107,7 +108,7 @@ export default function Page() {
           headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": csrf },
           credentials: "include"
         }
-      ).then(_ => router.push("/post/" + id));
+      ).then(_ => router.push("/post/" + postId));
     }
   }
 }

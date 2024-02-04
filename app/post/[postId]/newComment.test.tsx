@@ -21,7 +21,14 @@ test("Creates comment", async () => {
             }
         )
     );
-    render(<NewComment postId={"1"}/>);
+    vi.mock('next/navigation', () => ({
+        useParams() {
+            return {
+                id: 2
+            };
+        },
+    }));
+    render(<NewComment />);
     expect(screen.getByText("Your comment")).toBeDefined();
     await userEvent.type(screen.getByLabelText("Your comment"), "comment");
     await userEvent.click(screen.getByRole("button", { name: "Post comment" }));

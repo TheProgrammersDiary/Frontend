@@ -13,7 +13,14 @@ test("Shows comments", async () => {
             }
         )
     );
-    render(<Comments postId={"1"} />);
+    vi.mock('next/navigation', () => ({
+        useParams() {
+            return {
+                id: 2
+            };
+        },
+    }));
+    render(<Comments />);
     await waitFor(async () => {
         expect(screen.getByText("a1")).toBeDefined();
         expect(screen.getByText("c1")).toBeDefined();

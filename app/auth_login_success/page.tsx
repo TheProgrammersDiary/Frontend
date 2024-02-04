@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useEffect } from 'react';
 import "../../globals.css";
 import { signIn } from 'next-auth/react';
 import Cookies from 'js-cookie';
@@ -11,17 +12,17 @@ export default function AuthLoginSuccess() {
   const csrf = Cookies.get("csrf");
   const { setCsrf, setLoginType } = useAppContext();
   const router = useRouter();
-
-  setCsrf(csrf);
-  setLoginType("oauth");
-  signIn('credentials', {
-    username: username,
-    redirect: false,
-  }).then(() => {
-    Cookies.remove("username");
-    Cookies.remove("csrf");
-    router.push('/');
-  });
-
+  useEffect(() => {
+    setCsrf(csrf);
+    setLoginType("oauth");
+    signIn('credentials', {
+      username: username,
+      redirect: false,
+    }).then(() => {
+      Cookies.remove("username");
+      Cookies.remove("csrf");
+      router.push('/');
+    });
+  }, [csrf, setCsrf, setLoginType, username, router]);
   return <p>Successfully logged in!</p>;
 }

@@ -10,31 +10,38 @@ test("Post page displays correct data",
             return {
                 useSession: vi.fn(
                     () => {
-                        return { data: {user: { username: "reactAuthor" }}, status: 'authenticated' };
+                        return { data: { user: { username: "reactAuthor" } }, status: 'authenticated' };
                     }
                 )
             };
         });
         global.fetch = vi.fn().mockImplementation(
             (url: string, _) => {
+                console.log("URL IS: " + url);
                 expect(url.includes("/2")).true;
-                    return Promise.resolve(
-                        {
-                            json: () => Promise.resolve(
-                                { author: "reactAuthor", title: postTitle, content: postContent }
-                            )
-                        }
-                    );
+                return Promise.resolve(
+                    {
+                        json: () => Promise.resolve(
+                            { author: "reactAuthor", title: postTitle, content: postContent }
+                        )
+                    }
+                );
             }
         );
         vi.mock('next/navigation', () => ({
             useParams() {
                 return {
-                    id: 2
+                    postId: 2
                 };
             },
         }));
-        vi.mock('./comments', () => ({ default: () => {return <></>;} }));
+        vi.mock('./dropdown', () => ({
+            default: ({ _, onValueChanged }) => {
+                onValueChanged(1);
+                return <></>;
+            }
+        }));
+        vi.mock('./comments', () => ({ default: () => { return <></>; } }));
         render(<Page />);
         await waitFor(async () => {
             expect(screen.getByText("Comments")).toBeDefined();

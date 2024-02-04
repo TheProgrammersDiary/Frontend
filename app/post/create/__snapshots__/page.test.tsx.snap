@@ -3,8 +3,9 @@
 exports[`Post form submits correct data 1`] = `
 {
   "content": "content",
+  "id": "abc",
   "title": "title",
 }
 `;
 
-exports[`Post form submits correct data 2`] = `"/post/1"`;
+exports[`Post form submits correct data 2`] = `"/post/abc"`;
