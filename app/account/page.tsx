@@ -3,12 +3,13 @@
 import "../../globals.css";
 import { useForm } from "react-hook-form";
 import { blogUrl } from "../../next.config.js";
-import { useAppContext } from "../MemoryStorage";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux/store";
 
 export default function Account() {
   const { register, setError, reset, handleSubmit, formState } = useForm();
-  const { csrf, loginType } = useAppContext();
+  const { csrf, loginType } = useSelector((state: AppState) => state);
   const [responseMessage, setResponseMessage] = useState(<p></p>);
 
   return (

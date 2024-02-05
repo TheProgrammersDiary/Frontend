@@ -5,8 +5,9 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from 'next/navigation'
 import { postUrl } from "../../../next.config.js";
-import { useAppContext } from "../../MemoryStorage";
 import { useSession } from "next-auth/react";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../redux/store";
 
 export default function Page() {
   const { register, handleSubmit, setValue } = useForm();
@@ -34,7 +35,7 @@ export default function Page() {
       effect();
     }, [postId]);
   }
-  const { csrf } = useAppContext();
+  const { csrf } = useSelector((state: AppState) => state);
   const { data: session } = useSession();
   if (!session) {
     return (<p>You need to login to create a post.</p>);

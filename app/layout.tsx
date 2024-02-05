@@ -4,7 +4,7 @@ import { Metadata } from "next"
 import React from "react"
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Link from "next/link";
-import { MemoryStorage } from "./MemoryStorage";
+import MemoryStorage from "../redux/MemoryStorage";
 import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {

@@ -6,13 +6,14 @@ import { useForm } from "react-hook-form";
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { blogUrl } from "../../next.config.js";
-import { useAppContext } from "../MemoryStorage";
 import { useState } from "react";
+import { setCsrf, setLoginType } from '../../redux/actions';
+import { useDispatch } from "react-redux";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const router = useRouter();
-  const { setCsrf, setLoginType } = useAppContext();
   const [loginErrorMessage, setLoginErrorMessage] = useState(<p></p>);
 
   return (
@@ -111,8 +112,8 @@ export default function Login() {
         throw new Error(text);
       }
       const json = await response.json();
-      setCsrf(json.csrf);
-      setLoginType("local");
+      dispatch(setCsrf(json.csrf));
+      dispatch(setLoginType("local"));
       signIn('credentials', {
         username: json.username,
         redirect: false

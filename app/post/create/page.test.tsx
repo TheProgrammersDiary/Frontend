@@ -36,6 +36,15 @@ test("Post form submits correct data",
         )
       };
     });
+    vi.mock("react-redux", () => {
+      return {
+        useSelector: vi.fn(
+          (_) => {
+            return "abc";
+          }
+        )
+      };
+    });
     vi.mock('../../MemoryStorage', () => ({
       useAppContext() {
         return {

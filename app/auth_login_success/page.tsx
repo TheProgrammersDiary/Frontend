@@ -5,16 +5,17 @@ import "../../globals.css";
 import { signIn } from 'next-auth/react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { useAppContext } from '../MemoryStorage';
+import { useDispatch } from 'react-redux';
+import { setCsrf, setLoginType } from '../../redux/actions';
 
 export default function AuthLoginSuccess() {
+  const dispatch = useDispatch();
   const username = Cookies.get("username").replace(/\+/g, ' ');
   const csrf = Cookies.get("csrf");
-  const { setCsrf, setLoginType } = useAppContext();
   const router = useRouter();
   useEffect(() => {
-    setCsrf(csrf);
-    setLoginType("oauth");
+    dispatch(setCsrf(csrf));
+    dispatch(setLoginType("oauth"));
     signIn('credentials', {
       username: username,
       redirect: false,
