@@ -1,19 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 export interface AppState {
-  csrf: string | null;
+  jwt: string | null;
   loginType: string | null;
 }
 
 const initialState: AppState = {
-  csrf: null,
+  jwt: null,
   loginType: null,
 };
 
 const appReducer = (state: AppState = initialState, action: any) => {
   switch (action.type) {
-    case 'SET_CSRF':
-      return { ...state, csrf: action.payload };
+    case 'SET_JWT':
+      return { ...state, jwt: action.payload };
     case 'SET_LOGIN_TYPE':
       return { ...state, loginType: action.payload };
     default:

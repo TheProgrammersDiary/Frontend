@@ -6,24 +6,24 @@ import { signIn } from 'next-auth/react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { setCsrf, setLoginType } from '../../redux/actions';
+import { setJwt, setLoginType } from '../../redux/actions';
 
 export default function AuthLoginSuccess() {
   const dispatch = useDispatch();
   const username = Cookies.get("username").replace(/\+/g, ' ');
-  const csrf = Cookies.get("csrf");
+  const jwt = Cookies.get("jwtShortLived");
   const router = useRouter();
   useEffect(() => {
-    dispatch(setCsrf(csrf));
+    dispatch(setJwt(jwt));
     dispatch(setLoginType("oauth"));
     signIn('credentials', {
       username: username,
       redirect: false,
     }).then(() => {
       Cookies.remove("username");
-      Cookies.remove("csrf");
+      Cookies.remove("jwtShortLived");
       router.push('/');
     });
-  }, [csrf, setCsrf, setLoginType, username, router]);
+  }, [jwt, setJwt, setLoginType, username, router]);
   return <p>Successfully logged in!</p>;
 }

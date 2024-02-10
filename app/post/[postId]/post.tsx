@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 import { postUrl } from "../../../next.config.js";
 import { useParams } from "next/navigation";
 import Dropdown from "./dropdown";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../redux/store";
 
 export default function Post({ onArticleSet }) {
+  const jwt = useSelector((state: AppState) => state.jwt);
   const [article, setArticle] = useState(null);
   const [version, setVersion] = useState(null);
   const [isOwner, setIsOwner] = useState("false");
@@ -20,7 +23,11 @@ export default function Post({ onArticleSet }) {
       try {
         const response = await fetch(
           postUrl + "/posts/" + postId + "/" + version,
-          { method: "GET", credentials: "include" }
+          {
+            method: "GET",
+            credentials: "omit",
+            headers: { "Authorization": "Bearer " + jwt }
+          }
         );
         if (response.status === 404) {
           const text = await response.text();
@@ -34,7 +41,7 @@ export default function Post({ onArticleSet }) {
       }
     };
     effect();
-  }, [postId, version]);
+  }, [postId, version, jwt]);
   return (
     <>
       <div className="flex justify-end mb-4">

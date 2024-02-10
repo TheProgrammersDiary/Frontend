@@ -41,7 +41,7 @@ export default function RequestPasswordReset() {
     async function onSubmit(data, event) {
         event.preventDefault();
         try {
-            const response = await fetch(
+            await fetch(
                 blogUrl + "/users/request-password-reset",
                 {
                     method: "POST",

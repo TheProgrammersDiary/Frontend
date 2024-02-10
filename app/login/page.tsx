@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { blogUrl } from "../../next.config.js";
 import { useState } from "react";
-import { setCsrf, setLoginType } from '../../redux/actions';
+import { setJwt, setLoginType } from '../../redux/actions';
 import { useDispatch } from "react-redux";
 
 export default function Login() {
@@ -104,7 +104,7 @@ export default function Login() {
           method: "POST",
           body: JSON.stringify(body),
           headers: { "Content-Type": "application/json" },
-          credentials: "include"
+          credentials: "omit"
         }
       );
       if (response.status === 401) {
@@ -112,7 +112,7 @@ export default function Login() {
         throw new Error(text);
       }
       const json = await response.json();
-      dispatch(setCsrf(json.csrf));
+      dispatch(setJwt(json.jwtShortLived));
       dispatch(setLoginType("local"));
       signIn('credentials', {
         username: json.username,

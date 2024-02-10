@@ -17,7 +17,6 @@ test("Post page displays correct data",
         });
         global.fetch = vi.fn().mockImplementation(
             (url: string, _) => {
-                console.log("URL IS: " + url);
                 expect(url.includes("/2")).true;
                 return Promise.resolve(
                     {
@@ -42,6 +41,15 @@ test("Post page displays correct data",
             }
         }));
         vi.mock('./comments', () => ({ default: () => { return <></>; } }));
+        vi.mock("react-redux", () => {
+            return {
+              useSelector: vi.fn(
+                (_) => {
+                  return "abc";
+                }
+              )
+            };
+          });
         render(<Page />);
         await waitFor(async () => {
             expect(screen.getByText("Comments")).toBeDefined();

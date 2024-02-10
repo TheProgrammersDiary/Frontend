@@ -20,7 +20,7 @@ export default function Page() {
         try {
           const response = await fetch(
             postUrl + "/posts/" + postId + "/" + version,
-            { method: "GET", credentials: "include" }
+            { method: "GET", credentials: "omit" }
           );
           if (response.status === 404) {
             const text = await response.text();
@@ -35,7 +35,7 @@ export default function Page() {
       effect();
     }, [postId]);
   }
-  const { csrf } = useSelector((state: AppState) => state);
+  const jwt = useSelector((state: AppState) => state.jwt);
   const { data: session } = useSession();
   if (!session) {
     return (<p>You need to login to create a post.</p>);
@@ -94,8 +94,8 @@ export default function Page() {
         {
           method: "POST",
           body: JSON.stringify(body),
-          headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": csrf },
-          credentials: "include"
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + jwt },
+          credentials: "omit"
         }
       ).then((response) => response.json())
         .then((data) => router.push("/post/" + data.postId));
@@ -106,8 +106,8 @@ export default function Page() {
         {
           method: "PUT",
           body: JSON.stringify(body),
-          headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": csrf },
-          credentials: "include"
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + jwt },
+          credentials: "omit"
         }
       ).then(_ => router.push("/post/" + postId));
     }

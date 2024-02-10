@@ -1,11 +1,12 @@
+import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import NextAuthProvider from "./NextAuthProvider"
-import { Metadata } from "next"
-import React from "react"
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import Link from "next/link";
+import React from "react";
 import MemoryStorage from "../redux/MemoryStorage";
 import ClientLayout from "./ClientLayout";
+import NextAuthProvider from "./NextAuthProvider";
+import RefreshToken from "./RefreshToken";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
   title: 'Programmers diary',
@@ -22,8 +23,9 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   return (
     <html lang="en">
-        <MemoryStorage>
-          <NextAuthProvider session={session}>
+      <MemoryStorage>
+        <NextAuthProvider session={session}>
+          <RefreshToken>
             <body>
               <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-2">
                 <Link href="/" className="flex items-center flex-shrink-0 text-white mr-10">
@@ -34,8 +36,9 @@ export default async function RootLayout({
               </nav>
               {children}
             </body>
-          </NextAuthProvider>
-        </MemoryStorage>
+          </RefreshToken>
+        </NextAuthProvider>
+      </MemoryStorage>
     </html>
   )
 }

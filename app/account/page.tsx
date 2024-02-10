@@ -9,7 +9,7 @@ import { AppState } from "../../redux/store";
 
 export default function Account() {
   const { register, setError, reset, handleSubmit, formState } = useForm();
-  const { csrf, loginType } = useSelector((state: AppState) => state);
+  const { jwt, loginType } = useSelector((state: AppState) => state);
   const [responseMessage, setResponseMessage] = useState(<p></p>);
 
   return (
@@ -96,8 +96,8 @@ export default function Account() {
       {
         method: "PATCH",
         body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": csrf },
-        credentials: "include"
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + jwt },
+        credentials: "omit"
       }
     )
       .then(_ => {

@@ -1,9 +1,9 @@
-export const setCsrf = (csrf) => ({
-    type: 'SET_CSRF',
-    payload: csrf,
-  });
+export const setJwt = (jwt) => ({
+  type: 'SET_JWT',
+  payload: jwt,
+});
   
-  export const setLoginType = (loginType) => ({
-    type: 'SET_LOGIN_TYPE',
-    payload: loginType,
-  });
+export const setLoginType = (loginType) => ({
+  type: 'SET_LOGIN_TYPE',
+  payload: loginType,
+});

@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../redux/store";
 
 export default function Logout() {
-    const { csrf } = useSelector((state: AppState) => state);
+    const jwt = useSelector((state: AppState) => state.jwt);
     const router = useRouter();
     useEffect(() => {
         const effect = async () => {
@@ -17,8 +17,8 @@ export default function Logout() {
                 blogUrl + "/users/logout",
                 {
                     method: "POST",
-                    credentials: "include",
-                    headers: {"X-CSRF-TOKEN": csrf}
+                    credentials: "omit",
+                    headers: {"Authorization": "Bearer " + jwt}
                 }
             ).then(_ => {
                 signOut({redirect: false});
