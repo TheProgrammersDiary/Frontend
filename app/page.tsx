@@ -3,11 +3,12 @@
 import "../globals.css";
 import React, { useEffect, useState } from "react"
 import Link from 'next/link';
-import { useSession } from "next-auth/react";
 import { postUrl } from "../next.config.js";
+import { AppState } from "../redux/store";
+import { useSelector } from "react-redux";
 
 export default function Page() {
-  const { data: session } = useSession();
+  const username = useSelector((state: AppState) => state.username);
   const [articles, setArticles] = useState([]);
   const [requestStatus, setRequestStatus] = useState(
     <div className="flex items-center justify-center">
@@ -47,7 +48,7 @@ export default function Page() {
   }, []);
   return (
     <div>
-      <div>{session ? (<p>Logged in as {session?.user.name}</p>) : (<p>Logged out</p>)}</div>
+      <div>{username && (<p>Logged in as {username}</p>)}</div>
       <Link href="/post/create" className="flex items-center justify-center text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
         Create a new post
       </Link>

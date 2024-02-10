@@ -1,14 +1,14 @@
 import "../../../globals.css";
 import { useForm } from "react-hook-form";
 import React from "react";
-import { useSession } from "next-auth/react"
 import {blogUrl} from "../../../next.config.js";
 import { useParams } from "next/navigation";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../redux/store";
 
 export default function NewComment() {
     const { postId } = useParams();
-    const { data: session } = useSession();
-    const username = session?.user?.name || "Incognito";
+    const username = useSelector((state: AppState) => state.username) || "Incognito";
     const { register, handleSubmit, reset } = useForm();
     return (
         <div>

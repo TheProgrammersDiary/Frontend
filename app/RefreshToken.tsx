@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { blogUrl } from "../next.config";
-import { setJwt } from "../redux/actions";
+import { setJwt, setUsername } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 export default function RefreshToken({ children }: { children: React.ReactNode }): React.ReactNode {
@@ -15,8 +15,9 @@ export default function RefreshToken({ children }: { children: React.ReactNode }
           { method: "POST", credentials: "include" }
         );
         if (response.ok) {
-          const jwt = await response.text();
-          dispatch(setJwt(jwt));
+          const json = await response.json();
+          dispatch(setJwt(json.jwtShortLived));
+          dispatch(setUsername(json.username));
         }
       } catch (error) {
       }

@@ -2,11 +2,10 @@
 
 import React, { useEffect } from 'react';
 import "../../globals.css";
-import { signIn } from 'next-auth/react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { setJwt, setLoginType } from '../../redux/actions';
+import { setUsername, setJwt, setLoginType } from '../../redux/actions';
 
 export default function AuthLoginSuccess() {
   const dispatch = useDispatch();
@@ -16,14 +15,10 @@ export default function AuthLoginSuccess() {
   useEffect(() => {
     dispatch(setJwt(jwt));
     dispatch(setLoginType("oauth"));
-    signIn('credentials', {
-      username: username,
-      redirect: false,
-    }).then(() => {
-      Cookies.remove("username");
-      Cookies.remove("jwtShortLived");
-      router.push('/');
-    });
-  }, [jwt, setJwt, setLoginType, username, router]);
+    dispatch(setUsername(username));
+    Cookies.remove("username");
+    Cookies.remove("jwtShortLived");
+    router.push('/');
+  }, [dispatch]);
   return <p>Successfully logged in!</p>;
 }

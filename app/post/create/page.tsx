@@ -5,7 +5,6 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from 'next/navigation'
 import { postUrl } from "../../../next.config.js";
-import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../redux/store";
 
@@ -36,11 +35,10 @@ export default function Page() {
     }, [postId]);
   }
   const jwt = useSelector((state: AppState) => state.jwt);
-  const { data: session } = useSession();
-  if (!session) {
+  const username = useSelector((state: AppState) => state.username);
+  if (!username) {
     return (<p>You need to login to create a post.</p>);
   }
-  const username = session.user.name;
 
   return (
     <div className="p-8">

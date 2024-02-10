@@ -3,11 +3,10 @@
 import "../../globals.css";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { blogUrl } from "../../next.config.js";
 import { useState } from "react";
-import { setJwt, setLoginType } from '../../redux/actions';
+import { setJwt, setLoginType, setUsername } from '../../redux/actions';
 import { useDispatch } from "react-redux";
 
 export default function Login() {
@@ -114,10 +113,7 @@ export default function Login() {
       const json = await response.json();
       dispatch(setJwt(json.jwtShortLived));
       dispatch(setLoginType("local"));
-      signIn('credentials', {
-        username: json.username,
-        redirect: false
-      });
+      dispatch(setUsername(json.username));
       router.push("/");
     } catch (error) {
       setLoginErrorMessage(<p className="text-red-500">{error.message}</p>);

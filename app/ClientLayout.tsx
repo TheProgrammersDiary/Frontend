@@ -2,15 +2,16 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../globals.css";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { AppState } from "../redux/store";
 
 export default function ClientLayout(): React.ReactNode {
-    const { data: session } = useSession();
+    const jwt = useSelector((state: AppState) => state.jwt);
     return (
         <>
-            {session?.user ?
+            {jwt ?
                 <div className="flex items-center">
                     <Link href="/account" className="px-8">
                         <FontAwesomeIcon icon={faUser} style={{ color: "white", fontSize: 36 }} />

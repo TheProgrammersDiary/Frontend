@@ -9,7 +9,8 @@ import { AppState } from "../../redux/store";
 
 export default function Account() {
   const { register, setError, reset, handleSubmit, formState } = useForm();
-  const { jwt, loginType } = useSelector((state: AppState) => state);
+  const jwt = useSelector((state: AppState) => state.jwt);
+  const loginType = useSelector((state: AppState) => state.loginType);
   const [responseMessage, setResponseMessage] = useState(<p></p>);
 
   return (

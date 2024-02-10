@@ -23,6 +23,15 @@ test("Shows main page with posts", async () => {
             )
         };
     });
+    vi.mock("react-redux", () => {
+        return {
+          useSelector: vi.fn(
+            (_) => {
+              return "tester";
+            }
+          )
+        };
+      });
     render(<Page />);
     expect(screen.getByText("Create a new post")).toBeDefined();
     expect(screen.getByText("Articles")).toBeDefined();

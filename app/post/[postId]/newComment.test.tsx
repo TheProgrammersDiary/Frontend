@@ -1,6 +1,6 @@
 import { expect, test, vi } from "vitest";
 import NewComment from "./newComment";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 test("Creates comment", async () => {
@@ -28,6 +28,15 @@ test("Creates comment", async () => {
             };
         },
     }));
+    vi.mock("react-redux", () => {
+        return {
+          useSelector: vi.fn(
+            (_) => {
+              return "tester";
+            }
+          )
+        };
+      });
     render(<NewComment />);
     expect(screen.getByText("Your comment")).toBeDefined();
     await userEvent.type(screen.getByLabelText("Your comment"), "comment");
