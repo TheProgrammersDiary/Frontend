@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
-import {blogUrl} from "../../../next.config.js";
+import { blogUrl } from "../../../next.config.js";
 import { useParams } from "next/navigation.js";
+import NewComment from "./newComment";
 
 export default function Comments() {
     const { postId } = useParams();
@@ -11,9 +12,9 @@ export default function Comments() {
         const date = new Date(postedDate);
         const formattedDate = `${date.getFullYear()}-${padZero(date.getMonth() + 1)}-${padZero(date.getDate())} ${padZero(date.getHours())}:${padZero(date.getMinutes())}`;
         return formattedDate;
-      };
-    
-      const padZero = (value) => (value < 10 ? `0${value}` : value);
+    };
+
+    const padZero = (value) => (value < 10 ? `0${value}` : value);
 
     useEffect(() => {
         const effect = async () => {
@@ -33,7 +34,9 @@ export default function Comments() {
         }
         effect();
     }, [postId]);
-    return (
+    return (<>
         <ul>{comments.length > 0 ? comments : "No comments"}</ul>
+        <NewComment />
+    </>
     );
 }

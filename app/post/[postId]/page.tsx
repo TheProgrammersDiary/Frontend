@@ -2,7 +2,6 @@
 
 import "../../../globals.css";
 import React, { useState } from "react";
-import NewComment from "./newComment";
 import Comments from "./comments";
 import Post from "./post";
 
@@ -20,7 +19,6 @@ export default function Page() {
                   Comments
                 </h1>
                 <Comments />
-                <NewComment />
               </div>
             </div>
           }

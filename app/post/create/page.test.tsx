@@ -7,7 +7,6 @@ test("Post form submits correct data",
   async () => {
     const postId = 1;
     const postTitle = "title";
-    const postContent = "content";
     global.fetch = vi.fn().mockImplementation(
       (_, { body }) => {
         const parsedBody = JSON.parse(body);
@@ -55,7 +54,6 @@ test("Post form submits correct data",
     render(<Page />);
 
     await userEvent.type(screen.getByLabelText("Post title"), postTitle);
-    await userEvent.type(screen.getByLabelText("Post content"), postContent);
     await userEvent.click(screen.getByRole("button", { name: "Submit" }));
   }
 );

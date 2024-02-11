@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import MemoryStorage from "../redux/MemoryStorage";
 import ClientLayout from "./ClientLayout";
-import RefreshToken from "./RefreshToken";
+import RefreshToken from "./refreshToken";
 
 export const metadata: Metadata = {
   title: 'Programmers diary',

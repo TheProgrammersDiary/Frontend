@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import Dropdown from "./dropdown";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../redux/store";
+import purify from "dompurify";
 
 export default function Post({ onArticleSet }) {
   const jwt = useSelector((state: AppState) => state.jwt);
@@ -67,9 +68,7 @@ export default function Post({ onArticleSet }) {
           <p className="mt-2 text-gray-500">
             {article.author}
           </p>
-          <p className="mt-2 text-gray-600 break-all">
-            {article.content}
-          </p>
+          <p className="mt-2 text-gray-600 break-all" dangerouslySetInnerHTML={{ __html:purify.sanitize(article.content) }}></p>
         </>
       )}
     </>

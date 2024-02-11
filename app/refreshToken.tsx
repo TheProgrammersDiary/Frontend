@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useEffect } from "react";
 import { blogUrl } from "../next.config";
@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 export default function RefreshToken({ children }: { children: React.ReactNode }): React.ReactNode {
   const dispatch = useDispatch();
   useEffect(() => {
-    const effect = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch(
           blogUrl + "/users/refresh",
@@ -20,11 +20,12 @@ export default function RefreshToken({ children }: { children: React.ReactNode }
           dispatch(setUsername(json.username));
         }
       } catch (error) {
+        console.error("Error refreshing token:", error);
       }
     };
-    effect();
-  }, []);
-  return (<>
-    {children}
-  </>);
+    fetchData();
+    const intervalId = setInterval(fetchData, 9 * 60 * 1000);
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
+  return <>{children}</>;
 }

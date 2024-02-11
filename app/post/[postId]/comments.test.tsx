@@ -20,6 +20,15 @@ test("Shows comments", async () => {
             };
         },
     }));
+    vi.mock("react-redux", () => {
+        return {
+          useSelector: vi.fn(
+            (_) => {
+              return "abc";
+            }
+          )
+        };
+      });
     render(<Comments />);
     await waitFor(async () => {
         expect(screen.getByText("a1")).toBeDefined();

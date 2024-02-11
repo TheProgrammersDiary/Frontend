@@ -2,7 +2,7 @@
 
 exports[`Post form submits correct data 1`] = `
 {
-  "content": "content",
+  "content": null,
   "id": "abc",
   "title": "title",
 }

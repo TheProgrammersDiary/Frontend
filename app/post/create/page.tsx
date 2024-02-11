@@ -1,14 +1,17 @@
 "use client"
 
 import "../../../globals.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from 'next/navigation'
 import { postUrl } from "../../../next.config.js";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../redux/store";
+import RichTextEditor from "./richTextEditor";
+import purify from "dompurify";
 
 export default function Page() {
+  const [content, setContent] = useState(null);
   const { register, handleSubmit, setValue } = useForm();
   const router = useRouter();
   const postId = useSearchParams().get('postId');
@@ -27,7 +30,7 @@ export default function Page() {
           }
           const responseData = await response.json();
           setValue("title", responseData.title);
-          setValue("content", responseData.content);
+          setContent(purify.sanitize(responseData.content));
         } catch (error) {
         }
       };
@@ -35,8 +38,7 @@ export default function Page() {
     }, [postId]);
   }
   const jwt = useSelector((state: AppState) => state.jwt);
-  const username = useSelector((state: AppState) => state.username);
-  if (!username) {
+  if (!jwt) {
     return (<p>You need to login to create a post.</p>);
   }
 
@@ -60,16 +62,11 @@ export default function Page() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="content" className="block text-xl font-medium text-gray-700 dark:text-white mb-3">Post content</label>
-          <textarea
-            {...register("content", { required: true })}
-            rows={15}
-            name="content"
-            id="content"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required
-          />
+          <p>If you insert an image and want to write below it, click Tab two times instead of clicking with mouse.</p>
         </div>
+        {(content || !postId) && <div className="mb-3" style={{ height: "450px" }}>
+          <RichTextEditor initialHtml={content} onEditorChange={content => setContent(content)} />
+        </div>}
         <div className="flex justify-center">
           <button
             id="submit"
@@ -86,7 +83,7 @@ export default function Page() {
   async function onSubmit(data, event) {
     event.preventDefault();
     if (!postId) {
-      const body = { "author": username, "title": data.title, "content": data.content };
+      const body = { "title": data.title, "content": content };
       await fetch(
         postUrl + "/posts/create",
         {
@@ -98,7 +95,7 @@ export default function Page() {
       ).then((response) => response.json())
         .then((data) => router.push("/post/" + data.postId));
     } else {
-      const body = { "id": postId, "title": data.title, "content": data.content };
+      const body = { "id": postId, "title": data.title, "content": content };
       await fetch(
         postUrl + "/posts/edit",
         {
