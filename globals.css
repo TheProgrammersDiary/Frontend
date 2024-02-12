@@ -28,3 +28,15 @@
     font-family: monospace;
     white-space: pre-wrap;
   }
+
+#post-content h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+#post-content h2 {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-top: 1em;
+}

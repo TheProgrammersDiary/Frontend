@@ -21,20 +21,15 @@ const RichTextEditor = ({ initialHtml, onEditorChange }) => {
         onChange={handleChange}
         modules={{
           toolbar: [
-            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-            [{ size: [] }],
+            [{ 'header': '1' }, { 'header': '2' }],
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' },
-            { 'indent': '-1' }, { 'indent': '+1' }],
-            ['link', 'image', 'video'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['link', 'image'],
             ['clean']
           ]
         }}
         formats={[
-          'header', 'font', 'size',
-          'bold', 'italic', 'underline', 'strike', 'blockquote',
-          'list', 'bullet', 'indent',
-          'link', 'image', 'video'
+          'header', 'bold', 'italic', 'underline', 'strike', 'blockquote','list', 'bullet', 'link', 'image'
         ]}
       />
     </>
