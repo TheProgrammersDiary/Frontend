@@ -68,7 +68,7 @@ export default function Post({ onArticleSet }) {
           <p className="mt-2 text-gray-500">
             {article.author}
           </p>
-          <p className="mt-2 text-gray-600 break-all" dangerouslySetInnerHTML={{ __html:purify.sanitize(article.content) }}></p>
+          <div id="post-content" className="mt-2 text-gray-600 break-all" dangerouslySetInnerHTML={{ __html: purify.sanitize(article.content) }}></div>
         </>
       )}
     </>

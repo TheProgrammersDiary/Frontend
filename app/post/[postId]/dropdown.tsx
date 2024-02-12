@@ -20,7 +20,7 @@ export default function Dropdown({ postId, onValueChanged }) {
   };
 
   useEffect(() => {
-    if (postVersions && !selectedValue) {
+    if (postVersions && postVersions.length > 0 && !selectedValue) {
       valueChanged(postVersions[postVersions.length - 1]);
     }
   }, [postVersions]);
