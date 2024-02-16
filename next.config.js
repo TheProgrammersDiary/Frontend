@@ -1,4 +1,4 @@
 module.exports = {
-    blogUrl: process.env.blogUrl || "https://localhost:8080",
-    postUrl: process.env.postUrl || "https://localhost:8081",
+    blogUrl: process.env.blog_url || "https://localhost:8080",
+    postUrl: process.env.post_url || "https://localhost:8081",
   };
