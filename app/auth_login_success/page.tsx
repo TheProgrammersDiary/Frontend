@@ -9,10 +9,13 @@ import { setUsername, setJwt, setLoginType } from '../../redux/actions';
 
 export default function AuthLoginSuccess() {
   const dispatch = useDispatch();
+  if (!Cookies.get("username")) {
+    return <>Logging in...</>
+  }
+  const username = Cookies.get("username").replace(/\+/g, ' ');
+  const jwt = Cookies.get("jwtShortLived");
   const router = useRouter();
   useEffect(() => {
-    const username = Cookies.get("username").replace(/\+/g, ' ');
-    const jwt = Cookies.get("jwtShortLived");
     dispatch(setJwt(jwt));
     dispatch(setLoginType("oauth"));
     dispatch(setUsername(username));
