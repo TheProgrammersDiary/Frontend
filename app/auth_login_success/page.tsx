@@ -8,8 +8,8 @@ import { useDispatch } from 'react-redux';
 import { setUsername, setJwt, setLoginType } from '../../redux/actions';
 
 export default function AuthLoginSuccess() {
+  const dispatch = useDispatch();
   useEffect(() => {
-    const dispatch = useDispatch();
     const username = Cookies.get("username").replace(/\+/g, ' ');
     const jwt = Cookies.get("jwtShortLived");
     const router = useRouter();
