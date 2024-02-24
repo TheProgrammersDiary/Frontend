@@ -103,7 +103,7 @@ export default function Login() {
           method: "POST",
           body: JSON.stringify(body),
           headers: { "Content-Type": "application/json" },
-          credentials: "omit"
+          credentials: "include"
         }
       );
       if (response.status === 401) {
