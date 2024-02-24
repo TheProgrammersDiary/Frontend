@@ -5,7 +5,7 @@ const fs = require('fs');
 const port = 3000;
 const passphrase = process.env.ssl_blog_passphrase;
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+const app = next({ dev: dev });
 const handle = app.getRequestHandler();
 
 const httpsOptions = {

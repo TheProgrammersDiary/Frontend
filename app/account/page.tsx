@@ -70,7 +70,7 @@ export default function Account() {
                 </div>
               </form>
               {formState.errors.repeatedNewPassword && (
-                <p className="text-red-500">{formState.errors.repeatedNewPassword.message}</p>
+                <p className="text-red-500">{formState.errors.repeatedNewPassword.message.toString()}</p>
               )
               }
               {responseMessage}
@@ -85,6 +85,7 @@ export default function Account() {
     setResponseMessage(<p></p>);
     event.preventDefault();
     const body = { "currentPassword": data.currentPassword, "newPassword": data.newPassword };
+    
     if (data.newPassword !== data.repeatedNewPassword) {
       setError("repeatedNewPassword", {
         type: "manual",
@@ -92,19 +93,25 @@ export default function Account() {
       });
       return;
     }
-    await fetch(
-      blogUrl + "/users/change-password",
-      {
-        method: "PATCH",
-        body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + jwt },
-        credentials: "omit"
+
+    try {
+      const response = await fetch(
+        `${blogUrl}/users/change-password`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(body),
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${jwt}` },
+          credentials: "omit"
+        }
+      );
+      if (response.status === 401) {
+        const text = await response.text();
+        throw new Error(text);
       }
-    )
-      .then(_ => {
-        reset();
-        setResponseMessage(<p className="text-green-500">Password changed successfully.</p>);
-      })
-      .catch(error => setResponseMessage(<p className="text-red-500">{error.message}</p>));
+      reset();
+      setResponseMessage(<p className="text-green-500">Password changed successfully.</p>);
+    } catch (error) {
+      setResponseMessage(<p className="text-red-500">{error.message}</p>);
+    }
   }
 }

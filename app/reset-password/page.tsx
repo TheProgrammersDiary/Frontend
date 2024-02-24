@@ -77,7 +77,7 @@ export default function ResetPassword() {
                     </div>
                 </form>
                 {formState.errors.repeatedNewPassword && (
-                    <p className="text-red-500">{formState.errors.repeatedNewPassword.message}</p>
+                    <p className="text-red-500">{formState.errors.repeatedNewPassword.message.toString()}</p>
                 )
                 }
                 {responseMessage}
@@ -109,7 +109,7 @@ export default function ResetPassword() {
             if (response.status === 401) {
                 const text = await response.text();
                 throw new Error(text);
-              }
+            }
             reset();
             setResponseMessage(<p className="text-green-500">Password was reset successfully.</p>);
         } catch (error) {
