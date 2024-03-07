@@ -18,7 +18,9 @@ export default function RefreshToken({ children }: { children: React.ReactNode }
           const json = await response.json();
           dispatch(setJwt(json.jwtShortLived));
           dispatch(setUsername(json.username));
+          console.log("IS LOGIN LOCAL: " + json.isLoginLocal);
           dispatch(setLoginType(json.isLoginLocal ? "local" : "oauth"));
+          console.log(json.isLoginLocal ? "local" : "oauth");
         }
       } catch (error) {
         console.error("Error refreshing token:", error);
