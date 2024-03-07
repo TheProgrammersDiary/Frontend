@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { blogUrl } from "../next.config";
-import { setJwt, setUsername } from "../redux/actions";
+import { setJwt, setLoginType, setUsername } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 export default function RefreshToken({ children }: { children: React.ReactNode }): React.ReactNode {
@@ -18,6 +18,7 @@ export default function RefreshToken({ children }: { children: React.ReactNode }
           const json = await response.json();
           dispatch(setJwt(json.jwtShortLived));
           dispatch(setUsername(json.username));
+          dispatch(setLoginType(json.isLoginLocal ? "local" : "oauth"));
         }
       } catch (error) {
         console.error("Error refreshing token:", error);
