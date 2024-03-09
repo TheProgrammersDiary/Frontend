@@ -8,11 +8,16 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev: dev });
 const handle = app.getRequestHandler();
 
-const httpsOptions = {
+const httpsOptions = dev
+  ? {
     key: fs.readFileSync('./ssl_private_key.pem'),
     passphrase: passphrase,
     cert: fs.readFileSync('./ssl_certificate.pem')
-};
+  }
+  : {
+    key: process.env.ssl_cert,
+    cert: process.env.ssl_key
+  };
 app.prepare().then(() => {
     try {
     createServer(httpsOptions, async (req, res) => {
@@ -24,5 +29,5 @@ app.prepare().then(() => {
     });
 } catch (error) {
     console.error('Error starting the server:', error);
-  }
+}
 });
