@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation';
 import { blogUrl } from "../../next.config.js";
+import { useState } from "react";
 
 export default function SignUp() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit } = useForm();
   const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState(<p></p>);
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
@@ -60,6 +62,7 @@ export default function SignUp() {
           <Link href="/login" className="font-medium text-blue-600 hover:underline">
             Log in
           </Link>
+          {errorMessage}
         </p>
       </div>
     </div>
@@ -68,9 +71,18 @@ export default function SignUp() {
   async function onSubmit(data, event) {
     event.preventDefault();
     const body = { "username": data.username, "email": data.email, "password": data.password };
-    await fetch(
-      blogUrl + "/users/signup",
-      { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json" } }
-    ).then(_ => { router.push("/login") });
+    try {
+      const response = await fetch(
+        blogUrl + "/users/signup",
+        { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json" } }
+      );
+      if (response.status === 400) {
+        const text = await response.text();
+        throw new Error(text);
+      }
+      router.push("/login");
+    } catch (error) {
+      setErrorMessage(<p className="text-red-500">{error.message}</p>);
+    }
   }
 }
