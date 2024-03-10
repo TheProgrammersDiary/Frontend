@@ -57,6 +57,7 @@ jobs:
           name: images
           path: "./tests/visual_regression/**/*"
   push-image:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: [test, test_e2e]
     steps:
@@ -86,4 +87,4 @@ jobs:
         context: .
         file: Dockerfile.prod
         push: true
-        tags: localstradedocker/blog:frontend_latest    
+        tags: localstradedocker/blog:frontend_latest
