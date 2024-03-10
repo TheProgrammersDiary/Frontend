@@ -2,7 +2,7 @@ const { createServer } = require('https');
 const { parse } = require('url');
 const next = require('next');
 const fs = require('fs');
-const port = 3000;
+const port = process.env.port || 3000;
 const passphrase = process.env.ssl_blog_passphrase;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev: dev });
