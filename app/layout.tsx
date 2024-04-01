@@ -20,18 +20,23 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <MemoryStorage>
-          <RefreshToken>
-            <body>
-              <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-2">
-                <Link href="/" className="flex items-center flex-shrink-0 text-white mr-10">
-                  <img src="/favicon.ico" className="h-10" alt="Programmers' diary logo" />
-                  <span className="font-semibold text-xl tracking-tight">Programmers' diary</span>
-                </Link>
-                <ClientLayout />
-              </nav>
-              {children}
-            </body>
-          </RefreshToken>
+        <RefreshToken>
+          <body>
+            <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-2">
+              <Link href="/" className="flex items-center flex-shrink-0 text-white mr-10">
+                <img src="/favicon.ico" className="h-10" alt="Programmers' diary logo" />
+                <span className="font-semibold text-xl tracking-tight">Programmers' diary</span>
+              </Link>
+              <a
+                href="https://github.com/TheProgrammersDiary"
+                className="text-xl text-white pr-40">
+                Source code
+              </a>
+              <ClientLayout />
+            </nav>
+            {children}
+          </body>
+        </RefreshToken>
       </MemoryStorage>
     </html>
   )
